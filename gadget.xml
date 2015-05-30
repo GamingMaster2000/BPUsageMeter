@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<gadget>
+    <name>BP Usage Meter</name>
+    <version>3.0.0</version>
+    <author name="GM2K">
+        <info url="http://www.gm2k.net/gadgets/bpusagemeter/" />
+    </author>
+    <icons>
+        <icon height="64" width="64" src="img/icon.png" />
+    </icons>
+    <copyright>&#169; GM2K.</copyright>
+    <description>BP Usage Meter v3.0. Easily view your Bigpond usage from your desktop. NOTE: This gadget is not associated with Telstra/Bigpond.</description>
+    <hosts>
+        <host name="sidebar">
+            <base type="HTML" apiVersion="1.0.0" src="gadget.html" />
+            <permissions>Full</permissions>
+            <platform minPlatformVersion="1.0" />
+        </host>
+    </hosts>
+</gadget>
+

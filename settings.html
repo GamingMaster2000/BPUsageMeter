@@ -1,0 +1,26 @@
+<html>
+
+    <head>
+    	<link href="css/style_settings.css" rel="stylesheet" type="text/css" />
+
+        <script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/UsageGadgetSettings.js"></script>
+        <script type="text/javascript">
+       	 	//Initialise form
+			function Startup(){
+				LoadJSFiles(System.Gadget.path + "\\js\\settings", UsageGadgetSettings.settings);
+				UsageGadgetSettings.Initialise();
+			}
+			
+			var UsageGadgetSettings = new UsageGadgetSettings();
+		</script>
+    </head>
+
+	<body onLoad="Startup();">
+        <div id="tabs" class="tabs"></div>
+        <div style="height: 1px;"></div>
+        <div id="tabContent" class="font"></div>
+        <div class="row"><div id="status" class="fontred">&nbsp;</div></div>
+    </body>
+
+</html>

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svn/bpusagemeter/!svn/ver/1/js
+END
+common.js
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/bpusagemeter/!svn/ver/1/js/common.js
+END
+json2.js
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/bpusagemeter/!svn/ver/1/js/json2.js
+END
+Logger.js
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/bpusagemeter/!svn/ver/1/js/Logger.js
+END
+UsageGadget.js
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/bpusagemeter/!svn/ver/1/js/UsageGadget.js
+END
+UsageGadgetSettings.js
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/bpusagemeter/!svn/ver/1/js/UsageGadgetSettings.js
+END

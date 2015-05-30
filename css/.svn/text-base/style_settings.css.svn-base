@@ -1,0 +1,85 @@
+body 
+{
+	width:300px;
+	height:420px;
+	font-family: Arial, Verdana, "SF Sans Serif";
+	margin:0;
+	padding:0;
+}
+
+#updateBox
+{
+	padding: 5px;
+	text-align: center;
+	font-size: 11px;
+	color: black;
+}
+
+.noUpdateAvailable{
+	background: #bfffb2; 
+	border: 1px solid #158000;
+}
+
+.updateAvailable{
+	background:	#ffb2b2;
+    border: 1px solid #cc0000;
+}
+
+.label
+{
+ width: 150px;
+ float: left;	
+ padding-top: 4px;
+}
+
+.field
+{	
+	float: right;
+}
+
+.row
+{
+	clear: both;	
+}
+
+.font
+{
+	font-size: 11px;
+	color: black;
+}
+
+.fontred
+{			
+	font-size: 11px;	
+	color: red;
+}
+
+table{
+	border-spacing: 0;
+	border-collapse: collapse;	
+}
+
+.tabContent{
+	top: 0;
+	left: 0;
+}
+
+.tabs{
+	height: 30px;
+	overflow: auto;
+	background: #fff;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.tab{
+	height: 27px;
+	min-width: 10px;
+	float: left;
+	color: #000;
+	text-align: center;
+	padding: 5px;
+	margin-right: 3px;
+	margin-top: 3px;
+	margin-left: 3px;
+}

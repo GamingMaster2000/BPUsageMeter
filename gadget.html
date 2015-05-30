@@ -1,0 +1,23 @@
+﻿<html>
+    <head>
+        <title>Bigpond Usage Meter</title>
+        <script type="text/javascript" src="js/json2.js"></script>
+        <script type="text/javascript" src="js/common.js"></script>
+        <script type="text/javascript" src="js/Logger.js"></script>
+        <script type="text/javascript" src="js/UsageGadget.js"></script>
+        <script type="text/javascript">
+			function Startup(){
+				//Dynamically load any methods/styles files
+				LoadJSFiles(System.Gadget.path + "\\js\\methods", UsageGadget.methods);
+				LoadJSFiles(System.Gadget.path + "\\js\\styles", UsageGadget.styles);
+				
+				//Now that everything's loaded, start up the gadget!
+				UsageGadget.Initialise(true);
+			}
+			
+			var UsageGadget = new UsageGadget();
+		</script>
+    </head>
+    <body id="body" onLoad="Startup();">
+    </body>
+</html>
