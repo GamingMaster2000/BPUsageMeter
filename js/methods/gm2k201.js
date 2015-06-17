@@ -148,12 +148,11 @@ function gm2k201(){
 									data.unratedUsage = 0;
 									
 									try{
-										var UnratedUsage = document.getElementsByClassName("usage bottom_margin")[0];
-										UnratedUsage = UnratedUsage.getElementsByTagName('tfoot')[0];
-										UnratedUsage = UnratedUsage.getElementsByTagName('td')[UnratedUsage.getElementsByTagName('td').length].innerHTML;
-										data.unratedUsage = UnratedUsage;
+										var UnratedUsage = /<tr class="trStyleTotal">[^`]+<td>([^`]+)<\/td>[^`]+?<\/tr>[^`]+?<\/tfoot>/i.exec(responseText);
+										data.unratedUsage = UnratedUsage[1];
 									}catch(err){
 									}
+
 									data.flyoutData = this.BuildFlyoutPage(responseText, data);
 									data.raw = responseText;
 									UsageGadget.DisplayData(data);

@@ -174,7 +174,7 @@ function UsageGadget(){
 									data.allowance = System.Gadget.Settings.read("overrideQuota") * 1000;
 								
 								if(System.Gadget.Settings.read("includeUnrated"))
-									data.totalUsage += data.unratedUsage;
+									data.totalUsage = +data.totalUsage + +data.unratedUsage;
 								
 								this.style.DisplayData(data);
 							}catch(err){
