@@ -1,6 +1,6 @@
 // JavaScript Document
 //NOTE: Due to some restrictions with Gadgets/Javascript and the 
-//Bigpond Usage page this method is for we can't call the usage
+//Bigpond Usage page this method is for when we can't call the usage
 //page directly so we need to go via custom php webpage.
 //This method uses one hosted at gm2k.net but can be hosted anywhere
 //so if you want to host your own copy of the file just visit
@@ -20,6 +20,7 @@ function gm2k13i(){
 	this.uid = 'gm2k13i';
 	this.name = 'GM2K 1.3i';
 	this.priority = 30;
+	this.enabled = true;
 	
 	this.accountId = '';
 	this.serviceId = '';
@@ -61,7 +62,7 @@ function gm2k13i(){
 							var Traffic = Array(5);
 							
 							var Usage = /<tr class=\"trStyleTotal\">[^`]+?<!-- total usage shown as bold -->[^`]+?>([0-9\-]+)<\/b>/i.exec(responseText);
-							var Quota = /Monthly Plan Allowance[^`]+?([0-9:]+\s*(?:G|M|h))/i.exec(responseText);
+							var Quota = /Monthly (?:Plan )?Allowance[^`]+?([0-9:]+\s*(?:G|M|h))/i.exec(responseText);
 							var Period = /<tbody>[^`]+?<!-- date column -->[^`]+?>([0-9]{2} [A-Za-z]{3} [0-9]{4})<[^`]+>([0-9]{2} [A-Za-z]{3} [0-9]{4})[^`]+<\/tbody>/i.exec(responseText);
 							
 							var result = 1;
@@ -133,7 +134,7 @@ function gm2k13i(){
 									content = content.replace(/\/res\/images/gi, "img");
 									var pageTable = /<h5>Volume based usage meter table<\/h5>[\s]*(<table class[^`]+?>[^`]+<\/table>)/.exec(content);
 									
-									var accountDetails = /<table[^`]+?>([^`]+?Monthly Plan Allowance[^`]+?)<\/table>/i.exec(content);
+									var accountDetails = /<table[^`]+?>([^`]+?Monthly (?:Plan )?Allowance[^`]+?)<\/table>/i.exec(content);
 									accountDetails[1] = accountDetails[1].replace(/<a[^`]+?<\/a>/gi, "");
 									accountDetails[1] = accountDetails[1].replace(/class="[^`]+?"/gi, "");
 									accountDetails[1] = "<table class=\"accountTable\">" + accountDetails[1] + "</table>";

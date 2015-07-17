@@ -36,7 +36,7 @@ function About(){
 						
 						var latestMethodBox = document.createElement('div');
 						latestMethodBox.className = 'font';
-						latestMethodBox.innerHTML = 'Latest Update Method: ';
+						latestMethodBox.innerHTML = 'Last Update Method Used: ';
 												
 						this.latestMethod = document.createElement('span');
 						latestMethodBox.appendChild(this.latestMethod);
@@ -123,15 +123,15 @@ function About(){
 								
 								for(var i = 0; i < methods.length; i++){
 									if(methods[i].uid == method){
-										this.latestMethod.innerHTML = methods[i].name + ' ';
+										this.latestMethod.innerHTML = methods[i].name/* + ' '*/;
 
-										var that = this;
+										/*var that = this;
 										var resetLink = document.createElement('a');
 										resetLink.href = "#";
 										resetLink.innerHTML = 'Reset';
 										resetLink.onclick = function(){that.ResetMethod(); return false;};
 
-										this.latestMethod.appendChild(resetLink);	
+										this.latestMethod.appendChild(resetLink);	*/
 										return;
 									}
 								}

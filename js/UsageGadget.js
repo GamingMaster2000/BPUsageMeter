@@ -35,6 +35,16 @@ function UsageGadget(){
 								
 							if(System.Gadget.Settings.read("useErrorLog") == '' || System.Gadget.Settings.read("useErrorLog") == null || override)
 								System.Gadget.Settings.write("useErrorLog", this.Defaults.useErrorLog);
+								
+							for(var i = 0; i < this.methods.length; i++){
+								var enabled = System.Gadget.Settings.read("enable_" + this.methods[i].uid);
+								
+								//Setting hasn't been set yet. Enable methods by default
+								if(enabled === "")
+									enabled = true;
+								
+								this.methods[i].enabled = enabled;
+							}
 						}
 
 	this.SetStyle = 	function(){
@@ -120,9 +130,12 @@ function UsageGadget(){
 	this.CheckNextMethod = 	function()
 							{
 								try{
-									if(this.methodTry < this.methods.length)
-										this.methods[this.methodTry++].Run();
-									else{
+									if(this.methodTry < this.methods.length){
+										if(this.methods[this.methodTry++].enabled)
+											this.methods[this.methodTry - 1].Run(); //Previously advanced, so go back
+										else
+											this.CheckNextMethod();
+									}else{
 										this.logger.LogMessage("ERROR", "Tried all the methods possible but couldn't load your data. This usually occurs when Bigpond's usage meter is down.");
 
 										if(System.Gadget.Settings.read("hideFailedMessages"))
@@ -212,6 +225,12 @@ function UsageGadget(){
 	this.SettingsClosed =	function(event)
 							{
 								if (event.closeAction == event.Action.commit){
+									//Set the enabled status of all methods
+									for(var i = 0; i < this.methods.length; i++){
+										var enabled = System.Gadget.Settings.read("enable_" + this.methods[i].uid);
+										this.methods[i].enabled = enabled;
+									}
+									
 									if(this.style.uid != System.Gadget.Settings.read("style")){
 										//New style so all old stylesheets should probably be disabled. Allowing a fresh start for the new style
 										for(var i = 0; i < document.getElementsByTagName('link').length; i++)

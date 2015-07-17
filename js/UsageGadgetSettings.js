@@ -106,6 +106,8 @@ function UsageGadgetSettings(){
 											for(var i = 0; i < this.settings.length; i++){
 												try{
 													this.settings[i].SaveSettings(event);
+													if(event.cancel)
+														return;
 												}catch(err){
 													var name = (this.settings[i].name ? this.settings[i].name : "Unknown Settings");
 													System.Gadget.document.parentWindow.UsageGadget.logger.LogMessage("DEBUG", "Error saving settings: " + name);

@@ -1,9 +1,8 @@
 // JavaScript Document
-// JavaScript Document
-function gm2k201(){
-	this.uid = 'gm2k201';
-	this.name = 'GM2K 2.0.1';
-	this.priority = 20;
+function gm2k13(){
+	this.uid = 'gm2k13';
+	this.name = 'GM2K 1.3';
+	this.priority = 40;
 	this.enabled = true;
 	
 	this.accountId = '';
@@ -57,32 +56,9 @@ function gm2k201(){
 									try{
 										UsageGadget.logger.LogMessage("INFO", "'My Services' page loaded. Loading usage page. Method: " + this.name);
 										
-										var doc = document.createElement('div');
-										doc.innerHTML = responseText;
-										
-										var pTags = doc.getElementsByTagName("p");
-										var usageURL = '';
-
-										for(var i = 0; i < pTags.length; i++){
-											if(pTags[i].innerHTML == 'Username: ' + UsageGadget.username){
-												if(/view usage/ig.exec(pTags[i].parentNode.innerHTML)){
-													var linkItems = pTags[i].parentNode.getElementsByTagName('a');
-													for(var j = 0; j < linkItems.length; j++)
-														if(linkItems[j].innerHTML == 'View usage'){
-															usageURL = linkItems[j].href.replace("x-gadget://", "");
-															break;	
-														}
-												}
-											}
-										}
-
-										if(usageURL == ''){
-											UsageGadget.logger.LogMessage("ERROR", "Couldn't find usage URL.");
-											UsageGadget.CheckNextMethod();
-											return;
-										}
-
-										usageURL = "https://myaccount.bigpond.com" + usageURL;
+										var re = new RegExp("<a href=\"([^\"]+?)\">View usage</a>[^@]+(?:Username): " + UsageGadget.username, "gi");
+										var usageURL = re.exec(responseText);
+										usageURL = "https://myaccount.bigpond.com" + usageURL[1];
 
 										var that = this;
 										var detailsPage = new WebLoading(UsageGadget.logger);
@@ -102,23 +78,25 @@ function gm2k201(){
 								try{
 									var data = new DataToDisplay();
 									var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-									var result = 1;
-
+									var Traffic = Array(5);
+									
 									var Usage = /<tr class=\"trStyleTotal\">[^`]+?<!-- total usage shown as bold -->[^`]+?>([0-9\-]+)<\/b>/i.exec(responseText);
-									var Quota = /Monthly Allowance[^`]+?([0-9:]+\s*(?:G|M|h))/i.exec(responseText);
+									var Quota = /Monthly (?:Plan )?Allowance[^`]+?([0-9:]+\s*(?:G|M|h))/i.exec(responseText);
 									var Period = /<tbody>[^`]+?<!-- date column -->[^`]+?>([0-9]{2} [A-Za-z]{3} [0-9]{4})<[^`]+>([0-9]{2} [A-Za-z]{3} [0-9]{4})[^`]+<\/tbody>/i.exec(responseText);
-	
-									if(Usage != null)
-										data.totalUsage = (Usage[1] == '-' ? 0 : Usage[1]);
-									else
+									
+									var result = 1;
+									
+									if(Usage != null){
+										data.totalUsage = (Usage[1] == '-' ? '0' : Usage[1]);
+									}else
 										result = 0;
-
+									
 									if(Quota != null){
 										var allowanceDetails = /([0-9]+)\s*(G|M)/.exec(Quota[1]);
 										data.allowance = allowanceDetails[1] * (allowanceDetails[2] == 'G' ? 1000 : 1);
 									}else
 										result = 0;
-
+										
 									if(Period != null){
 										var startParts = /([0-9]+) ([a-z]+)/i.exec(Period[1]);
 										var endParts = /([0-9]+) ([a-z]+)/i.exec(Period[2]);
@@ -134,20 +112,20 @@ function gm2k201(){
 										}else{
 											endParts.push((new Date()).getFullYear());
 										}
-
+			
 										data.startDate = (new Date(startParts[1] + " " + startParts[2] + " " + startParts[3])).getTime();
 										data.endDate = (new Date(endParts[1] + " " + endParts[2] + " " + endParts[3])).getTime();
 									}else
 										result = 0;
-
+										
 									if(result == 0){
 										UsageGadget.logger.LogMessage("WARNING", "Required usage information wasn't found. Page is probably not compatible with method " + this.name + ". Trying next method.");
 										UsageGadget.CheckNextMethod();
 										return;
 									}
-
+										
 									data.unratedUsage = 0;
-									
+								
 									try{
 										var UnratedUsage = /<tr class="trStyleTotal">[^`]+<td>([^`]+)<\/td>[^`]+?<\/tr>[^`]+?<\/tfoot>/i.exec(responseText);
 										data.unratedUsage = UnratedUsage[1];
@@ -167,15 +145,15 @@ function gm2k201(){
 							{
 								try{
 									content = content.replace(/\/res\/images/gi, "img");
-		
+	
 									var pageTable = /<h5>Volume based usage meter table<\/h5>[\s]*(<table class[^`]+?>[^`]+<\/table>)/.exec(content);
 									
-									var accountDetails = /<table[^`]+?>([^`]+?Monthly Allowance[^`]+?)<\/table>/i.exec(content);
+									var accountDetails = /<table[^`]+?>([^`]+?Monthly (?:Plan )?Allowance[^`]+?)<\/table>/i.exec(content);
 									accountDetails[1] = accountDetails[1].replace(/<a[^`]+?<\/a>/gi, "");
 									accountDetails[1] = accountDetails[1].replace(/class="[^`]+?"/gi, "");
 									accountDetails[1] = "<table class=\"accountTable\">" + accountDetails[1] + "</table>";
-
-									var pageHTML = "<h5>PLAN DETAILS</h5>" + accountDetails[1] + "<div class=\"spacer\"></div>" + pageTable[1];
+																					
+									var pageHTML = "<br><h5>PLAN DETAILS</h5>" + accountDetails[1] + "<div class=\"spacer\"></div>" + pageTable[1];
 									
 									return pageHTML;
 								}catch(err){

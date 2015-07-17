@@ -79,7 +79,9 @@ table{
 	color: #000;
 	text-align: center;
 	padding: 5px;
-	margin-right: 3px;
+	margin-right: 1px;
 	margin-top: 3px;
-	margin-left: 3px;
+	margin-left: 1px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
 }
