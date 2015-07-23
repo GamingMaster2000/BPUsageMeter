@@ -56,7 +56,8 @@ function gm2k300(){
 										//Sometimes caused it to get stuck on 'REFRESHING'
 										if(this.accountId == '' || this.serviceId == ''){
 											UsageGadget.logger.LogMessage("ERROR", "Couldn't find accountId or serviceId.");
-											UsageGadget.CheckNextMethod();										
+											UsageGadget.CheckNextMethod();
+											return;									
 										}
 										
 										var that = this;
@@ -68,6 +69,7 @@ function gm2k300(){
 									}catch(err){
 										UsageGadget.logger.LogMessage("ERROR", "Couldn't find accountId or serviceId.");
 										UsageGadget.CheckNextMethod();
+										return;
 									}
 								}
 								
@@ -82,30 +84,29 @@ function gm2k300(){
 									data.totalUsage = usageInfo.result.totalUsage;
 									data.allowance = usageInfo.result.allowanceUsage;
 									
-									//Sometimes the start/end dates are wrong (Telstra only knows why)
-									//Try a messy (but hopefully more accurate) way first but
+									//Sometimes the start/end dates are wrong (Turns out it's to do with timezones)
+									//Try a messy (but more accurate) way first but
 									//fall back to Telstra provided values if necessary
 									try{
-										var Period = /^\(([0-9]+ [a-z]+) - ([0-9]+ [a-z])\)$/i.exec(usageInfo.result.headerDateRange);
+										var Period = /^\(([0-9]+ [a-z]+) - ([0-9]+ [a-z]+)\)$/i.exec(usageInfo.result.headerDateRange);
 										var startParts = /([0-9]+) ([a-z]+)/i.exec(Period[1]);
 										var endParts = /([0-9]+) ([a-z]+)/i.exec(Period[2]);
-										
+
 										if(monthNames[(new Date()).getMonth()] == 'Jan' && startParts[2] == 'Dec'){
 											startParts.push((new Date()).getFullYear() - 1);
 										}else{
 											startParts.push((new Date()).getFullYear());
 										}
-										
+			
 										if(monthNames[(new Date()).getMonth()] == 'Dec' && endParts[2] == 'Jan'){
 											endParts.push((new Date()).getFullYear() + 1);	
 										}else{
 											endParts.push((new Date()).getFullYear());
 										}
-			
+
 										data.startDate = (new Date(startParts[1] + " " + startParts[2] + " " + startParts[3])).getTime();
 										data.endDate = (new Date(endParts[1] + " " + endParts[2] + " " + endParts[3])).getTime();	
 									}catch(err){
-
 										data.startDate = usageInfo.result.startDate;
 										data.endDate = usageInfo.result.endDate;
 									}

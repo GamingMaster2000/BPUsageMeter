@@ -238,7 +238,7 @@ function Classic(){
 
 								var blankRow = document.createElement('div');
 								blankRow.className = 'row';
-								blankRow.innerHTML = '<br>';
+								blankRow.innerHTML = '<br /><hr style="border:none; border-top:1px dotted black; height:1px;">';
 								settingsContainer.appendChild(blankRow);
 								
 								var resetColours = document.createElement('strong');
